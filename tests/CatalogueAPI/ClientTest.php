@@ -2,14 +2,19 @@
 
 namespace Tests\CatalogueAPI;
 
-use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
+use Kevinrob\GuzzleCache\CacheMiddleware;
+use Kevinrob\GuzzleCache\Storage\Psr6CacheStorage;
+use Kevinrob\GuzzleCache\Strategy\GreedyCacheStrategy;
+use PHPUnit\Framework\TestCase;
 use Spyrit\Billetel\Client\ArtistsClient;
 use Spyrit\Billetel\Client\CategoriesClient;
 use Spyrit\Billetel\Client\EventsClient;
 use Spyrit\Billetel\Client\GroupsClient;
 use Spyrit\Billetel\Client\PlacesClient;
 use Spyrit\Billetel\Client\TicketOfficesClient;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 
 class ClientTest extends TestCase
@@ -20,7 +25,12 @@ class ClientTest extends TestCase
 
     protected function setUp()
     {
-        $httpClient = new Client();
+        $stack = HandlerStack::create();
+        $cache_storage = new Psr6CacheStorage(new FilesystemAdapter('', 0, 'cache'), 60);
+        $middleware = new CacheMiddleware(new GreedyCacheStrategy($cache_storage, 3600));
+        $stack->push($middleware, 'cache');
+        $httpClient = new Client(['handler' => $stack]);
+
         $this->artistsClient = new ArtistsClient(self::URL, self::AUTHORIZATION, self::DESK, $httpClient);
         $this->categoriesClient = new CategoriesClient(self::URL, self::AUTHORIZATION, self::DESK, $httpClient);
         $this->eventsClient = new EventsClient(self::URL, self::AUTHORIZATION, self::DESK, $httpClient);
