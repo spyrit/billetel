@@ -2,6 +2,7 @@
 
 namespace Tests\CatalogueAPI;
 
+use DOMElement;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use Kevinrob\GuzzleCache\CacheMiddleware;
@@ -15,6 +16,7 @@ use Spyrit\Billetel\Client\GroupsClient;
 use Spyrit\Billetel\Client\PlacesClient;
 use Spyrit\Billetel\Client\TicketOfficesClient;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use XMLReader;
 
 
 class ClientTest extends TestCase
@@ -39,94 +41,121 @@ class ClientTest extends TestCase
         $this->ticketOfficesClient = new TicketOfficesClient(self::URL, self::AUTHORIZATION, self::DESK, $httpClient);
     }
 
+    private function findInXML($xmlString, $elementName, $attributeName = null)
+    {
+        $reader = new XMLReader();
+        $reader->XML($xmlString);
+
+        while($reader->read()) {
+            if ($reader->nodeType == XMLReader::ELEMENT && $reader->name == $elementName) {
+                if ($attributeName) {
+                    return $reader->getAttribute($attributeName);
+                }
+                return $reader->expand();
+            }
+        }
+    }
+
     public function testArtistsClient()
     {
         $result = $this->artistsClient->get();
 
-        $this->assertTrue(isset($result->artist));
+        $first = $this->findInXML($result, 'artist');
 
-        $results = $result->artist;
+        $this->assertInstanceOf(DOMElement::class, $first);
 
-        $this->assertGreaterThan(1, count($results));
+        $firstName = $this->findInXML($result, 'firstName');
 
-        $first = $results[0];
+        $this->assertInstanceOf(DOMElement::class, $firstName);
 
-        $this->assertTrue(isset($first['id']));
+        $firstId = $this->findInXML($result, 'artist', 'id');
+
+        $this->assertNotFalse($firstId);
     }
 
     public function testCategoriesClient()
     {
         $result = $this->categoriesClient->get();
 
-        $this->assertTrue(isset($result->category));
+        $first = $this->findInXML($result, 'category');
 
-        $results = $result->category;
+        $this->assertInstanceOf(DOMElement::class, $first);
 
-        $this->assertGreaterThan(1, count($results));
+        $subcats = $this->findInXML($result, 'subCategories');
 
-        $first = $results[0];
+        $this->assertInstanceOf(DOMElement::class, $subcats);
 
-        $this->assertTrue(isset($first['id']));
+        $firstId = $this->findInXML($result, 'category', 'id');
+
+        $this->assertNotFalse($firstId);
     }
 
     public function testEventsClient()
     {
         $result = $this->eventsClient->get();
 
-        $this->assertTrue(isset($result->event));
+        $first = $this->findInXML($result, 'event');
 
-        $results = $result->event;
+        $this->assertInstanceOf(DOMElement::class, $first);
 
-        $this->assertGreaterThan(1, count($results));
+        $label = $this->findInXML($result, 'label');
 
-        $first = $results[0];
+        $this->assertInstanceOf(DOMElement::class, $label);
 
-        $this->assertTrue(isset($first['id']));
+        $firstId = $this->findInXML($result, 'event', 'id');
+
+        $this->assertNotFalse($firstId);
     }
 
     public function testGroupsClient()
     {
         $result = $this->groupsClient->get();
 
-        $this->assertTrue(isset($result->group));
+        $first = $this->findInXML($result, 'group');
 
-        $results = $result->group;
+        $this->assertInstanceOf(DOMElement::class, $first);
 
-        $this->assertGreaterThan(1, count($results));
+        $class = $this->findInXML($result, 'class');
 
-        $first = $results[0];
+        $this->assertInstanceOf(DOMElement::class, $class);
 
-        $this->assertTrue(isset($first['id']));
+        $firstId = $this->findInXML($result, 'group', 'id');
+
+        $this->assertNotFalse($firstId);
     }
 
     public function testPlacesClient()
     {
         $result = $this->placesClient->get();
 
-        $this->assertTrue(isset($result->place));
+        $first = $this->findInXML($result, 'place');
 
-        $results = $result->place;
+        $this->assertInstanceOf(DOMElement::class, $first);
 
-        $this->assertGreaterThan(1, count($results));
+        $label = $this->findInXML($result, 'label');
 
-        $first = $results[0];
+        $this->assertInstanceOf(DOMElement::class, $label);
 
-        $this->assertTrue(isset($first['id']));
+        $firstId = $this->findInXML($result, 'place', 'id');
+
+        $this->assertNotFalse($firstId);
     }
 
     public function testTicketOfficesClient()
     {
         $result = $this->ticketOfficesClient->get();
 
-        $this->assertTrue(isset($result->ticketOffice));
+        $first = $this->findInXML($result, 'ticketOffice');
 
-        $results = $result->ticketOffice;
+        $this->assertInstanceOf(DOMElement::class, $first);
 
-        $this->assertGreaterThan(1, count($results));
+        $label = $this->findInXML($result, 'label');
 
-        $first = $results[0];
+        $this->assertInstanceOf(DOMElement::class, $label);
 
-        $this->assertTrue(isset($first['id']));
+        $firstId = $this->findInXML($result, 'ticketOffice', 'id');
+
+        $this->assertNotFalse($firstId);
     }
 }
 

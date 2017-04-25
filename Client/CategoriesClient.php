@@ -12,8 +12,7 @@ class CategoriesClient extends AbstractClient
     public function get()
     {
         $uri = '/bol/api/catalog/v2/repositories/files/categories';
-        $res = $this->action('GET', $uri);
 
-        return simplexml_load_string($res);
+        return $this->action('GET', $uri);
     }
 }
