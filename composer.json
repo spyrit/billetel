@@ -1,0 +1,22 @@
+{
+    "name": "spyrit/billetel",
+    "type": "library",
+    "description": "Billetel client",
+    "homepage": "http://www.spyrit.net",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Spyrit",
+            "email": "support@spyrit.net"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spyrit\\Billetel\\":""
+        }
+    }
+}
+
