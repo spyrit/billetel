@@ -102,7 +102,8 @@ abstract class AbstractClient
         $content = json_decode($e->getResponse()->getBody()->getContents(), true);
         $message = isset($content['message']) ? $content['message'] : 'Unknown error';
         $code = isset($content['code']) ? $content['code'] : 0;
+        $message .= ' ('.$code.')';
 
-        return new Exception($message, $code, $e->getResponse()->getStatusCode());
+        return new Exception($message, $e->getResponse()->getStatusCode());
     }
 }
