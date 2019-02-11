@@ -6,9 +6,9 @@ use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
 
 /**
- * Class AddressFacade
+ * Class ClientFacade
  */
-class AddressFacade
+class ClientFacade
 {
     /**
      * @var string $gender
@@ -32,11 +32,32 @@ class AddressFacade
     public $firstName;
 
     /**
-     * @var string $addressTypeId
-     * @SerializedName("AddressTypeId")
+     * @var string $birthday
+     * @SerializedName("Birthday")
      * @Type("string")
      */
-    public $addressTypeId;
+    public $birthday;
+
+    /**
+     * @var string $phoneNumber
+     * @SerializedName("PhoneNumber")
+     * @Type("string")
+     */
+    public $phoneNumber;
+
+    /**
+     * @var string $cellPhoneNumber
+     * @SerializedName("CellPhoneNumber")
+     * @Type("string")
+     */
+    public $cellPhoneNumber;
+
+    /**
+     * @var string $email
+     * @SerializedName("Email")
+     * @Type("string")
+     */
+    public $email;
 
     /**
      * @var string $companyName
@@ -93,4 +114,11 @@ class AddressFacade
      * @Type("string")
      */
     public $country;
+
+    /**
+     * @var string $isOptinFnac
+     * @SerializedName("IsOptinFnac")
+     * @Type("string")
+     */
+    public $isOptinFnac;
 }

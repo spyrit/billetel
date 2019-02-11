@@ -19,7 +19,7 @@ class HolderFacade
 
     /**
      * @var string $firstName
-     * @SerializedName("firstName")
+     * @SerializedName("FirstName")
      * @Type("string")
      */
     public $firstName;
