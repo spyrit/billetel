@@ -4,6 +4,7 @@ namespace Spyrit\Billetel\Client;
 
 use Spyrit\Billetel\Client\AbstractClient;
 use Spyrit\Billetel\Facade\ClientFacade;
+use Spyrit\Billetel\Util\Util;
 
 class ClientClient extends AbstractClient
 {
@@ -16,11 +17,7 @@ class ClientClient extends AbstractClient
     {
         $uri = self::BASE_URL;
 
-        $params = [];
-
-        foreach ($client as $property => $value) {
-            $params[$property] = $value;
-        }
+        $params = Util::getArrayFromObject($client);
 
         return $this->action('POST', $uri, $params);
     }
@@ -32,11 +29,7 @@ class ClientClient extends AbstractClient
     {
         $uri = self::BASE_URL .'/'. $clientId;
 
-        $params = [];
-
-        foreach ($client as $property => $value) {
-            $params[$property] = $value;
-        }
+        $params = Util::getArrayFromObject($client);
 
         return $this->action('PUT', $uri, $params);
     }

@@ -4,6 +4,7 @@ namespace Spyrit\Billetel\Client;
 
 use Spyrit\Billetel\Client\AbstractClient;
 use Spyrit\Billetel\Facade\TicketFacade;
+use Spyrit\Billetel\Util\Util;
 
 class TicketClient extends AbstractClient
 {
@@ -16,9 +17,7 @@ class TicketClient extends AbstractClient
     {
         $uri = self::BASE_URL. $clientId .'/orders/'. $orderId .'/item/'. $itemId .'/tickets/'. $ticket->id;
 
-        foreach ($ticket as $property => $value) {
-            $params[$property] = $value;
-        }
+        $params = Util::getArrayFromObject($ticket);
 
         return $this->action('POST', $uri, $params);
     }

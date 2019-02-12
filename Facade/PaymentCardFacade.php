@@ -4,6 +4,7 @@ namespace Spyrit\Billetel\Facade;
 
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
+use Spyrit\Billetel\Facade\OwnerFacade;
 
 /**
  * Class PaymentCardFacade
@@ -44,4 +45,11 @@ class PaymentCardFacade
      * @Type("string")
      */
     public $paymentCardCVV;
+
+    /**
+     * @var OwnerFacade $owner
+     * @SerializedName("Owner")
+     * @Type("OwnerFacade")
+     */
+    public $owner;
 }

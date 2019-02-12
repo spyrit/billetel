@@ -5,6 +5,7 @@ namespace Spyrit\Billetel\Client;
 use Spyrit\Billetel\Client\AbstractClient;
 use Spyrit\Billetel\Facade\AddressFacade;
 use Spyrit\Billetel\Facade\HolderFacade;
+use Spyrit\Billetel\Util\Util;
 
 class CartClient extends AbstractClient
 {
@@ -91,11 +92,7 @@ class CartClient extends AbstractClient
     {
         $uri = self::BASE_URL . $cartId .'/deliveryAddress';
 
-        $params = [];
-
-        foreach ($address as $property => $value) {
-            $params[$property] = $value;
-        }
+        $params = Util::getArrayFromObject($address);
 
         return $this->action('POST', $uri, $params);
     }
@@ -112,9 +109,7 @@ class CartClient extends AbstractClient
             'ticketId' => $ticketId,
         ];
 
-        foreach ($holder as $property => $value) {
-            $params[$property] = $value;
-        }
+        $params = array_merge($params, Util::getArrayFromObject($holder));
 
         return $this->action('POST', $uri);
     }

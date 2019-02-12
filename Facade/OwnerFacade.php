@@ -4,6 +4,7 @@ namespace Spyrit\Billetel\Facade;
 
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
+use Spyrit\Billetel\Facade\BillingAddressFacade;
 
 /**
  * Class OwnerFacade
@@ -23,4 +24,11 @@ class OwnerFacade
      * @Type("string")
      */
     public $lastName;
+
+    /**
+     * @var BillingAddressFacade $billingAddress
+     * @SerializedName("BillingAddress")
+     * @Type("BillingAddressFacade")
+     */
+    public $billingAddress;
 }
