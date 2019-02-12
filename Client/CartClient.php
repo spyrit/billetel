@@ -5,6 +5,7 @@ namespace Spyrit\Billetel\Client;
 use Spyrit\Billetel\Client\AbstractClient;
 use Spyrit\Billetel\Facade\AddressFacade;
 use Spyrit\Billetel\Facade\HolderFacade;
+use Spyrit\Billetel\Facade\OrderDetailRequestFacade;
 use Spyrit\Billetel\Util\Util;
 
 class CartClient extends AbstractClient
@@ -24,15 +25,14 @@ class CartClient extends AbstractClient
     /**
      * @return SimpleXMLElement
      */
-    public function addDetailToNewCart($eventId, $sessionId, $customerClassId, $ticketQuantity)
+    public function addDetailToNewCart($eventId, $sessionId, $orderDetailRequests)
     {
         $uri = self::BASE_URL . 'events';
 
         $params = [
             'eventId' => $eventId,
             'sessionId' => $sessionId,
-            'customerClassId' => $customerClassId,
-            'ticketQuantity' => $ticketQuantity,
+            'items' => $orderDetailRequests,
         ];
 
         return $this->action('POST', $uri, $params);
@@ -41,15 +41,14 @@ class CartClient extends AbstractClient
     /**
      * @return SimpleXMLElement
      */
-    public function addDetailToExistingCart($cartId, $eventId, $sessionId, $customerClassId, $ticketQuantity)
+    public function addDetailToExistingCart($cartId, $eventId, $sessionId, $orderDetailRequests)
     {
         $uri = self::BASE_URL . 'events/'. $cartId;
 
         $params = [
             'eventId' => $eventId,
             'sessionId' => $sessionId,
-            'customerClassId' => $customerClassId,
-            'ticketQuantity' => $ticketQuantity,
+            'items' => $orderDetailRequests,
         ];
 
         return $this->action('POST', $uri, $params);
