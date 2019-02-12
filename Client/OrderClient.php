@@ -7,6 +7,7 @@ use Spyrit\Billetel\Facade\PaymentCardFacade;
 use Spyrit\Billetel\Facade\OwnerFacade;
 use Spyrit\Billetel\Facade\BillingAddressFacade;
 use Spyrit\Billetel\Facade\AcsFormDataFacade;
+use Spyrit\Billetel\Facade\OrderFacade;
 
 class OrderClient extends AbstractClient
 {
@@ -25,17 +26,17 @@ class OrderClient extends AbstractClient
     /**
      * @return SimpleXMLElement
      */
-    public function validate($clientId, $clientIpAddress, $cartId, $totalPrice, PaymentCardFacade $paymentCard, OwnerFacade $owner, BillingAddressFacade $billingAddress)
+    public function validate($clientId, $clientIpAddress, OrderFacade $order, PaymentCardFacade $paymentCard, OwnerFacade $owner, BillingAddressFacade $billingAddress)
     {
         $uri = self::BASE_URL . $clientId .'/orders';
 
         $params = [
             'clientIpAddress' => $clientIpAddress,
-            'cartId' => $cartId,
-            'totalPrice' => $totalPrice,
         ];
 
-        // TODO items
+        foreach ($order as $property => $value) {
+            $params[$property] = $value;
+        }
 
         foreach ($paymentCard as $property => $value) {
             $params[$property] = $value;
@@ -55,7 +56,7 @@ class OrderClient extends AbstractClient
     /**
      * @return SimpleXMLElement
      */
-    public function validateSecure($clientId, $clientIpAddress, $cartId, $totalPrice, AcsFormDataFacade $acsFormData)
+    public function validateSecure($clientId, $clientIpAddress, OrderFacade $order, AcsFormDataFacade $acsFormData)
     {
         $uri = self::BASE_URL . $clientId .'/orders/3DSecure';
 
@@ -65,7 +66,9 @@ class OrderClient extends AbstractClient
             'totalPrice' => $totalPrice,
         ];
 
-        // TODO items
+        foreach ($order as $property => $value) {
+            $params[$property] = $value;
+        }
 
         foreach ($acsFormData as $property => $value) {
             $params[$property] = $value;

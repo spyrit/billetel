@@ -3,6 +3,7 @@
 namespace Spyrit\Billetel\Client;
 
 use Spyrit\Billetel\Client\AbstractClient;
+use Spyrit\Billetel\Facade\TicketFacade;
 
 class TicketClient extends AbstractClient
 {
@@ -11,15 +12,13 @@ class TicketClient extends AbstractClient
     /**
      * @return SimpleXMLElement
      */
-    public function getByTicket($clientId, $orderId, $itemId, $ticketId, $ticketType, $width, $height)
+    public function getByTicket($clientId, $orderId, $itemId, TicketFacade $ticket)
     {
-        $uri = self::BASE_URL. $clientId .'/orders/'. $orderId .'/item/'. $itemId .'/tickets/'. $ticketId;
+        $uri = self::BASE_URL. $clientId .'/orders/'. $orderId .'/item/'. $itemId .'/tickets/'. $ticket->id;
 
-        $params = [
-            'ticketType' => $ticketType,
-            'width' => $width,
-            'height' => $height,
-        ];
+        foreach ($ticket as $property => $value) {
+            $params[$property] = $value;
+        }
 
         return $this->action('POST', $uri, $params);
     }
@@ -27,13 +26,15 @@ class TicketClient extends AbstractClient
     /**
      * @return SimpleXMLElement
      */
-    public function getByOrderDetail($clientId, $orderId, $itemId)
+    public function getByOrderDetail($clientId, $orderId, $itemId, $tickets)
     {
         $uri = self::BASE_URL. $clientId .'/orders/'. $orderId .'/item/'. $itemId .'/tickets';
 
-        // TODO tickets
+        $params = [
+            'tickets' => $tickets,
+        ];
 
-        return $this->action('POST', $uri);
+        return $this->action('POST', $uri, $params);
     }
 
     /**
