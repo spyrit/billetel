@@ -15,7 +15,13 @@ class Util
         }
 
         foreach ($object as $key => $value) {
-            $result = array_merge($result, $this->getArrayFromObject($value, $key));
+            if (!is_object($value)) {
+                $result = array_merge($result, self::getArrayFromObject($value, $key));
+            } else {
+                $result = array_merge($result, [
+                    $key => self::getArrayFromObject($value, $key)
+                ]);
+            }
         }
 
         return $result;

@@ -23,7 +23,7 @@ class UtilTest extends TestCase
             'firstName' => 'FirstName',
         ];
 
-        $this->assertEquals($result, $expectedResult);
+        $this->assertEquals($expectedResult, $result);
 
         $billingAddress = new BillingAddressFacade();
         $billingAddress->street = 'street';
@@ -63,6 +63,6 @@ class UtilTest extends TestCase
             ],
         ];
 
-        $this->assertEquals($result, $expectedResult);
+        $this->assertEquals($expectedResult, $result);
     }
 }
