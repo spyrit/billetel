@@ -17,7 +17,7 @@ class CartClient extends AbstractClient
      */
     public function getCart($cartId)
     {
-        $uri = self::BASE_URL . $cartId;
+        $uri = self::BASE_URL .'/'. $cartId;
 
         return $this->action('GET', $uri);
     }
@@ -27,7 +27,7 @@ class CartClient extends AbstractClient
      */
     public function addDetailToNewCart($eventId, $sessionId, $orderDetailRequests)
     {
-        $uri = self::BASE_URL . 'events';
+        $uri = self::BASE_URL . '/events';
 
         $params = [
             'eventId' => $eventId,
@@ -35,7 +35,7 @@ class CartClient extends AbstractClient
             'items' => $orderDetailRequests,
         ];
 
-        return $this->action('POST', $uri, $params);
+        return $this->action('POST', $uri, ['json' => $params]);
     }
 
     /**
@@ -43,7 +43,7 @@ class CartClient extends AbstractClient
      */
     public function addDetailToExistingCart($cartId, $eventId, $sessionId, $orderDetailRequests)
     {
-        $uri = self::BASE_URL . 'events/'. $cartId;
+        $uri = self::BASE_URL . '/events/'. $cartId;
 
         $params = [
             'eventId' => $eventId,
@@ -51,7 +51,7 @@ class CartClient extends AbstractClient
             'items' => $orderDetailRequests,
         ];
 
-        return $this->action('POST', $uri, $params);
+        return $this->action('POST', $uri, ['json' => $params]);
     }
 
     /**
@@ -59,7 +59,7 @@ class CartClient extends AbstractClient
      */
     public function deleteCart($cartId)
     {
-        $uri = self::BASE_URL . $cartId;
+        $uri = self::BASE_URL .'/'. $cartId;
 
         return $this->action('DELETE', $uri);
     }
@@ -69,7 +69,7 @@ class CartClient extends AbstractClient
      */
     public function deleteCartDetail($cartId, $itemId)
     {
-        $uri = self::BASE_URL . $cartId .'/items/'. $itemId;
+        $uri = self::BASE_URL .'/'. $cartId .'/items/'. $itemId;
 
         return $this->action('DELETE', $uri);
     }
@@ -79,7 +79,7 @@ class CartClient extends AbstractClient
      */
     public function setDeliveryMode($cartId, $deliveryModeId)
     {
-        $uri = self::BASE_URL . $cartId .'/deliveryMode/'. $deliveryModeId;
+        $uri = self::BASE_URL .'/'. $cartId .'/deliveryMode/'. $deliveryModeId;
 
         return $this->action('POST', $uri);
     }
@@ -89,7 +89,7 @@ class CartClient extends AbstractClient
      */
     public function setDeliveryAddress($cartId, AddressFacade $address)
     {
-        $uri = self::BASE_URL . $cartId .'/deliveryAddress';
+        $uri = self::BASE_URL .'/'. $cartId .'/deliveryAddress';
 
         $params = Util::getArrayFromObject($address);
 
@@ -101,7 +101,7 @@ class CartClient extends AbstractClient
      */
     public function setHolder($cartId, $itemId, $tickets)
     {
-        $uri = self::BASE_URL . $cartId .'/holders';
+        $uri = self::BASE_URL .'/'. $cartId .'/holders';
 
         $params = [
             'itemId' => $itemId,
@@ -116,7 +116,7 @@ class CartClient extends AbstractClient
      */
     public function setDetailInsurance($cartId, $isSelected)
     {
-        $uri = self::BASE_URL . $cartId .'/items/'. $itemId .'/insurances/'. $isSelected;
+        $uri = self::BASE_URL .'/'. $cartId .'/items/'. $itemId .'/insurances/'. $isSelected;
 
         return $this->action('POST', $uri);
     }
@@ -126,7 +126,7 @@ class CartClient extends AbstractClient
      */
     public function setCartInsurance($cartId, $insurances)
     {
-        $uri = self::BASE_URL . $cartId .'/items/insurances';
+        $uri = self::BASE_URL .'/'. $cartId .'/items/insurances';
 
         $params = [
             'insurances' => $insurances,
