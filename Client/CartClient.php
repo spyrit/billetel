@@ -10,7 +10,7 @@ use Spyrit\Billetel\Util\Util;
 
 class CartClient extends AbstractClient
 {
-    const BASE_URL = self::BASE_URL . '';
+    const BASE_URL = 'bol/api/booking/v2/carts';
 
     /**
      * @return SimpleXMLElement
