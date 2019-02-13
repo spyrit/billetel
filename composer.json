@@ -11,8 +11,7 @@
         }
     ],
     "require": {
-        "guzzlehttp/guzzle": "~6.0",
-        "phpunit/phpunit": "^8"
+        "guzzlehttp/guzzle": "~6.0"
     },
     "require-dev": {
         "kevinrob/guzzle-cache-middleware": "^2.0",
