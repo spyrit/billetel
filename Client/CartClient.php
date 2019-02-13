@@ -99,18 +99,16 @@ class CartClient extends AbstractClient
     /**
      * @return SimpleXMLElement
      */
-    public function setHolder($cartId, $itemId, $ticketId, HolderFacade $holder)
+    public function setHolder($cartId, $itemId, $tickets)
     {
         $uri = self::BASE_URL . $cartId .'/holders';
 
         $params = [
             'itemId' => $itemId,
-            'ticketId' => $ticketId,
+            'tickets' => $tickets,
         ];
 
-        $params = array_merge($params, Util::getArrayFromObject($holder));
-
-        return $this->action('POST', $uri);
+        return $this->action('POST', $uri, $params);
     }
 
     /**
@@ -126,10 +124,14 @@ class CartClient extends AbstractClient
     /**
      * @return SimpleXMLElement
      */
-    public function setCartInsurance($cartId, $isSelected)
+    public function setCartInsurance($cartId, $insurances)
     {
         $uri = self::BASE_URL . $cartId .'/items/insurances';
 
-        return $this->action('POST', $uri);
+        $params = [
+            'insurances' => $insurances,
+        ];
+
+        return $this->action('POST', $uri, $params);
     }
 }

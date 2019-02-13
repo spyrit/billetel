@@ -3,11 +3,10 @@
 namespace Spyrit\Billetel\Client;
 
 use Spyrit\Billetel\Client\AbstractClient;
-use Spyrit\Billetel\Facade\PaymentCardFacade;
 use Spyrit\Billetel\Facade\OwnerFacade;
 use Spyrit\Billetel\Facade\BillingAddressFacade;
-use Spyrit\Billetel\Facade\AcsFormDataFacade;
 use Spyrit\Billetel\Facade\OrderFacade;
+use Spyrit\Billetel\Facade\ExternalPaymentFacade;
 use Spyrit\Billetel\Util\Util;
 
 class OrderClient extends AbstractClient
@@ -27,35 +26,16 @@ class OrderClient extends AbstractClient
     /**
      * @return SimpleXMLElement
      */
-    public function validate($clientId, $clientIpAddress, OrderFacade $order, PaymentCardFacade $paymentCard)
+    public function validateExternalPayment($clientId, $clientIpAddress, OrderFacade $order, ExternalPaymentFacade $externalPayment)
     {
-        $uri = self::BASE_URL . $clientId .'/orders';
+        $uri = self::BASE_URL . $clientId .'/orders/externalPayment';
 
         $params = [
             'clientIpAddress' => $clientIpAddress,
         ];
 
         $params = array_merge($params, Util::getArrayFromObject($order));
-        $params = array_merge($params, Util::getArrayFromObject($paymentCard));
-
-        return $this->action('POST', $uri, $params);
-    }
-
-    /**
-     * @return SimpleXMLElement
-     */
-    public function validateSecure($clientId, $clientIpAddress, OrderFacade $order, AcsFormDataFacade $acsFormData)
-    {
-        $uri = self::BASE_URL . $clientId .'/orders/3DSecure';
-
-        $params = [
-            'clientIpAddress' => $clientIpAddress,
-            'cartId' => $cartId,
-            'totalPrice' => $totalPrice,
-        ];
-
-        $params = array_merge($params, Util::getArrayFromObject($order));
-        $params = array_merge($params, Util::getArrayFromObject($acsFormData));
+        $params = array_merge($params, Util::getArrayFromObject($externalPayment));
 
         return $this->action('POST', $uri, $params);
     }
