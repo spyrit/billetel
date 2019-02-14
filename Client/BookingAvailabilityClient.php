@@ -4,7 +4,7 @@ namespace Spyrit\Billetel\Client;
 
 use Spyrit\Billetel\Client\AbstractClient;
 
-class AvailabilityBookingClient extends AbstractClient
+class BookingAvailabilityClient extends AbstractClient
 {
     /**
      * @return SimpleXMLElement
