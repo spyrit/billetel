@@ -18,7 +18,7 @@ class OrderClient extends AbstractClient
      */
     public function get($clientId, $orderId)
     {
-        $uri = self::BASE_URL . $clientId .'/orders/'. $orderId;
+        $uri = self::BASE_URL . '/' . $clientId .'/orders/'. $orderId;
 
         return $this->action('GET', $uri);
     }
@@ -28,7 +28,7 @@ class OrderClient extends AbstractClient
      */
     public function validateExternalPayment($clientId, $clientIpAddress, OrderFacade $order, ExternalPaymentFacade $externalPayment)
     {
-        $uri = self::BASE_URL . $clientId .'/orders/externalPayment';
+        $uri = self::BASE_URL . '/' . $clientId .'/orders/externalPayment';
 
         $params = [
             'clientIpAddress' => $clientIpAddress,
