@@ -11,7 +11,7 @@ class AvailabilityBookingClient extends AbstractClient
      */
     public function get($eventId, $sessionId)
     {
-        $uri = '/bol/api/booking/v2/events/'. $eventId .'/sessions/'. $sessionId .'/availability';
+        $uri = 'bol/api/booking/v2/events/'. $eventId .'/sessions/'. $sessionId .'/availability';
 
         return $this->action('GET', $uri);
     }
