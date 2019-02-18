@@ -15,7 +15,7 @@ class TicketClient extends AbstractClient
      */
     public function getByTicket($clientId, $orderId, $itemId, TicketFacade $ticket)
     {
-        $uri = self::BASE_URL. $clientId .'/orders/'. $orderId .'/item/'. $itemId .'/tickets/'. $ticket->id;
+        $uri = self::BASE_URL. '/' . $clientId .'/orders/'. $orderId .'/item/'. $itemId .'/tickets/'. $ticket->id;
 
         $params = Util::getArrayFromObject($ticket);
 
@@ -27,7 +27,7 @@ class TicketClient extends AbstractClient
      */
     public function getByOrderDetail($clientId, $orderId, $itemId, $tickets)
     {
-        $uri = self::BASE_URL. $clientId .'/orders/'. $orderId .'/item/'. $itemId .'/tickets';
+        $uri = self::BASE_URL. '/' . $clientId .'/orders/'. $orderId .'/item/'. $itemId .'/tickets';
 
         $params = [
             'tickets' => $tickets,
@@ -41,7 +41,7 @@ class TicketClient extends AbstractClient
      */
     public function getByOrder($clientId, $orderId)
     {
-        $uri = self::BASE_URL. $clientId .'/orders/'. $orderId .'/tickets';
+        $uri = self::BASE_URL. '/' . $clientId .'/orders/'. $orderId .'/tickets';
 
         return $this->action('POST', $uri);
     }
