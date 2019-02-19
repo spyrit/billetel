@@ -68,7 +68,7 @@ abstract class AbstractClient
         $options['headers'] = $this->headers;
 
         foreach ($params as $key => $value) {
-            $options[$key] = $value;
+            $options['json'][$key] = $value;
         }
 
         foreach ($headers as $key => $value) {

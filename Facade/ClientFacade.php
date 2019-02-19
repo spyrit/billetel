@@ -116,9 +116,9 @@ class ClientFacade
     public $country;
 
     /**
-     * @var string $isOptinFnac
-     * @SerializedName("IsOptinFnac")
+     * @var string $isOptinFNAC
+     * @SerializedName("isOptinFNAC")
      * @Type("string")
      */
-    public $isOptinFnac;
+    public $isOptinFNAC;
 }

@@ -35,7 +35,7 @@ class CartClient extends AbstractClient
             'items' => $orderDetailRequests,
         ];
 
-        return $this->action('POST', $uri, ['json' => $params]);
+        return $this->action('POST', $uri, $params);
     }
 
     /**
@@ -51,7 +51,7 @@ class CartClient extends AbstractClient
             'items' => $orderDetailRequests,
         ];
 
-        return $this->action('POST', $uri, ['json' => $params]);
+        return $this->action('POST', $uri, $params);
     }
 
     /**
