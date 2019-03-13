@@ -43,6 +43,6 @@ class TicketClient extends AbstractClient
     {
         $uri = self::BASE_URL. '/' . $clientId .'/orders/'. $orderId .'/tickets';
 
-        return $this->action('POST', $uri);
+        return $this->action('GET', $uri);
     }
 }
