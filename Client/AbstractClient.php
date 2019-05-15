@@ -103,6 +103,13 @@ abstract class AbstractClient
         $message = isset($content['message']) ? $content['message'] : 'Unknown error';
         $code = isset($content['code']) ? $content['code'] : 0;
         $message .= ' ('.$code.')';
+        
+        if (isset($content['causes'])) {
+            $message .= ", causes : \n";
+            foreach($content['causes'] as $cause) {
+                $message .= "- {$cause['code']} : {$cause['message']}\n";
+            }
+        }
 
         return new Exception($message, $e->getResponse()->getStatusCode());
     }

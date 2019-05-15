@@ -9,7 +9,9 @@ class Util
         $result = [];
 
         if (!is_object($object)) {
-            $result[$propertyName] = $object;
+            if (!is_null($object)) {
+                $result[$propertyName] = $object;
+            }
 
             return $result;
         }
